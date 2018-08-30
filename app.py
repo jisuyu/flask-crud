@@ -42,6 +42,7 @@ def read(id):
     post=Post.query.get(id)
     # SELECT * FROM posts WHERE id=1;
     return render_template("read.html",post=post)
+  
     
 @app.route("/posts/<int:id>/delete")
 def delete(id):
@@ -50,5 +51,31 @@ def delete(id):
     post=Post.query.get(id)
     db.session.delete(post)
     db.session.commit()
+    #DELETE FROM posts WHERE id=2;
     # return render_template("delete.html")
     return redirect('/')
+    
+@app.route("/posts/<int:id>/edit")
+def edit(id):
+    #DB에서 특정한 게시글을 수정하기!
+    post=Post.query.get(id)
+    return render_template("edit.html",post=post)
+
+    
+@app.route("/posts/<int:id>/update", methods=["POST"])
+def update(id):
+   
+    #edit.html 에서 값 받아오기
+    t = request.form.get('title')
+    c = request.form.get('content')
+    
+    #받아온 값으로 db수정하기
+    post=Post.query.get(id)
+    post.title=t
+    post.content=c
+    db.session.commit()
+    #UPDATES posts SET title ="hihi" WHERE id=2
+    
+    #수정됬는지 보기
+    return redirect('/')
+    
