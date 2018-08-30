@@ -1,16 +1,35 @@
 {% extends "layout.html" %}
 {% block body %}
 <!--작성된 게시글을 모두 보여주는 곳-->
-<h1>게시판 입니다!</h1>
+<h1 class="text-center">게시판 입니다!</h1>
 <a href="/posts/new">글 쓰러가기</a>
 <hr>
-{% for post in posts %}
-    <p>제목 : {{post.title}}</p>
-    <p>내용 : {{post.content}}</p>
-    <p>작성시간 : {{post.created_at}}</p>
-    <a href="/posts/{{post.id}}">글 보기</a>
-    <a href="/posts/{{post.id}}/delete">글 삭제하기</a>
-    <a href="/posts/{{post.id}}/edit">글 수정하기</a>
-    <hr>
-{% endfor %}
+
+<table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">제목</th>
+      <th scope="col">내용</th>
+      <th scope="col">작성 시간</th>
+      <th scope="col">링크</th>
+      <th scope="col">삭제</th>
+      <th scope="col">수정</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for post in posts %}
+    <tr>
+      <th scope="row">{{post.id}}</th>
+      <td>{{post.title}}</td>
+      <td>{{post.content}}</td>
+      <td>{{post.created_at.strftime("%Y년 %m월 %d일 %H:%M")}}</td>
+      <td><a href="/posts/{{post.id}}">글 보기</a></td>
+      <td><a href="/posts/{{post.id}}/delete">글 삭제하기</a></td>
+      <td><a href="/posts/{{post.id}}/edit">글 수정하기</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+    
 {% endblock %}
