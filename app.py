@@ -15,8 +15,10 @@ migrate = Migrate(app, db)
 
 @app.route("/")
 def index():
-    posts = Post.query.all()
+    posts = Post.query.order_by(Post.id.desc()).all()
     # SELECT * FROM posts;
+    # SELECT * FROM posts ORDER BY id DESC;
+    # ASC 가 디폴트
     return render_template("index.html", posts=posts)
     
 @app.route("/posts/new")
@@ -79,3 +81,28 @@ def update(id):
     #수정됬는지 보기
     return redirect('/')
     
+#post.query.filter_by(title="1").count()
+#SELECT COUNT (*) FROM posts
+#WHERE title='1';
+
+
+#Post.query.filter_by(title="1").all()
+#SELECT * FROM posts
+#WHERE title = '1';
+
+#Post.query.filter_by(title="1").first()
+#SELECT * FROM posts
+#WHERE title = '1' LIMIT 1;
+
+#Post.query.filter(Post.title!="1").all()
+#SELECT * FROM posts
+#WHERE title != '1'
+
+#Post.query.filter(Post.title.like("%1%")).all()
+#SELECT * FROM posts
+#WHERE title LIKE '%1%';
+
+#from sqlarchemy import and_, or_
+#Post.query.filter(and_(Post.title=="1", Post.content=="1"))
+#SELECT * FROM posts
+#WHERE title = "1" AND content="1"
