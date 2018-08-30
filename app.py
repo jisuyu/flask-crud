@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+# -*- coding: utf-8 -*-
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -41,3 +42,13 @@ def read(id):
     post=Post.query.get(id)
     # SELECT * FROM posts WHERE id=1;
     return render_template("read.html",post=post)
+    
+@app.route("/posts/<int:id>/delete")
+def delete(id):
+    #DB에서 특정한 게시글을 삭제하기!
+    
+    post=Post.query.get(id)
+    db.session.delete(post)
+    db.session.commit()
+    # return render_template("delete.html")
+    return redirect('/')
