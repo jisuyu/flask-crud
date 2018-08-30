@@ -34,3 +34,10 @@ def create():
     # VALUES ('1번글', '1번내용');
     db.session.commit()
     return render_template("create.html", post=post)
+    
+@app.route("/posts/<int:id>")
+def read(id):
+    #DB에서 특정한 게시글을 가져와!
+    post=Post.query.get(id)
+    # SELECT * FROM posts WHERE id=1;
+    return render_template("read.html",post=post)
